@@ -3,14 +3,14 @@ import SectionTitle from "@/components/ui/SectionTitle";
 
 export default function AboutStemPage() {
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20 bg-gray-50 dark:bg-black">
       <Container>
         <SectionTitle
           title="What is STEM?"
           subtitle="Science, Technology, Engineering, and Mathematics"
         />
 
-        <div className="mx-auto max-w-3xl space-y-6 text-lg text-gray-600">
+        <div className="mx-auto max-w-3xl space-y-6 text-lg text-gray-600 dark:text-gray-300">
           <p>
             STEM education focuses on hands-on learning, problem-solving, and
             innovation across scientific and technical disciplines.

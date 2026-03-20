@@ -3,14 +3,14 @@ import SectionTitle from "@/components/ui/SectionTitle";
 
 export default function AboutPreviewSection() {
   return (
-    <section className="bg-gray-50 py-20">
+    <section className="bg-gray-50 py-20 dark:bg-black">
       <Container>
         <SectionTitle
           title="About Our STEM School"
           subtitle="Our school encourages innovation, critical thinking, and project-based learning through STEM education."
         />
 
-        <div className="mx-auto max-w-3xl text-center text-lg leading-8 text-gray-600">
+        <div className="mx-auto max-w-3xl text-center text-lg leading-8 text-gray-600 dark:text-gray-300">
           <p>
             We believe that education is not only about studying theories, but
             also about applying knowledge through real-world projects. Our

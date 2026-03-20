@@ -10,10 +10,25 @@ export default function ContactPage() {
           subtitle="Get in touch with our school"
         />
 
-        <div className="mx-auto max-w-xl space-y-4 text-center text-gray-600">
-          <p>Email: school@email.com</p>
-          <p>Phone: +20 123 456 789</p>
-          <p>Location: Your City, Egypt</p>
+        <div className="mx-auto max-w-xl space-y-4 text-center text-gray-600 dark:text-gray-300">
+          <p>
+            <span className="font-semibold text-gray-900 dark:text-white">
+              Email:
+            </span>{" "}
+            school@email.com
+          </p>
+          <p>
+            <span className="font-semibold text-gray-900 dark:text-white">
+              Phone:
+            </span>{" "}
+            +966 569343053
+          </p>
+          <p>
+            <span className="font-semibold text-gray-900 dark:text-white">
+              Location:
+            </span>{" "}
+            Riyadh, Saudi Arabia
+          </p>
         </div>
       </Container>
     </section>

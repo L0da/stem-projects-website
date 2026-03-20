@@ -8,11 +8,16 @@ export default function SectionTitle({
   subtitle,
 }: SectionTitleProps) {
   return (
-    <div className="mb-10 space-y-3 text-center">
-      <h2 className="text-3xl font-bold text-gray-900 md:text-4xl">{title}</h2>
-      {subtitle ? (
-        <p className="mx-auto max-w-2xl text-gray-600">{subtitle}</p>
-      ) : null}
+    <div className="mb-12 text-center ">
+      <h2 className="text-4xl font-bold text-gray-900 dark:text-white">
+        {title}
+      </h2>
+
+      {subtitle && (
+        <p className="mt-3 text-lg text-gray-600 dark:text-gray-300">
+          {subtitle}
+        </p>
+      )}
     </div>
   );
 }

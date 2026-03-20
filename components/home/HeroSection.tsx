@@ -3,18 +3,18 @@ import Container from "@/components/ui/Container";
 
 export default function HeroSection() {
   return (
-    <section className="bg-gradient-to-b from-blue-50 to-white py-20">
+    <section className="bg-gradient-to-b from-blue-50 to-white py-20 dark:from-gray-950 dark:to-black">
       <Container>
         <div className="max-w-3xl space-y-6">
-          <span className="inline-block rounded-full bg-blue-100 px-4 py-1 text-sm font-semibold text-blue-700">
+          <span className="inline-block rounded-full bg-blue-100 px-4 py-1 text-sm font-semibold text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
             STEM School Projects Showcase
           </span>
 
-          <h1 className="text-4xl font-extrabold leading-tight text-gray-900 md:text-6xl">
+          <h1 className="text-4xl font-extrabold leading-tight text-gray-900 dark:text-white md:text-6xl">
             Explore Innovation, Creativity, and Student Projects
           </h1>
 
-          <p className="text-lg leading-8 text-gray-600 md:text-xl">
+          <p className="text-lg leading-8 text-gray-600 dark:text-gray-300 md:text-xl">
             Welcome to our STEM projects website, where we showcase student
             ideas, research, engineering solutions, and innovative projects
             that reflect the spirit of STEM education.
@@ -30,7 +30,7 @@ export default function HeroSection() {
 
             <Link
               href="/about-stem"
-              className="rounded-xl border border-gray-300 px-6 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-100"
+              className="rounded-xl border border-gray-300 px-6 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-100 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
             >
               Learn About STEM
             </Link>
