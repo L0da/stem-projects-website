@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import ThemeToggle from "@/components/ui/theme-toggle";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -24,18 +25,25 @@ export default function Navbar() {
           STEM Projects
         </Link>
 
-        <nav className="hidden items-center gap-6 text-sm font-medium text-gray-700 dark:text-gray-300 md:flex">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="transition hover:text-black dark:hover:text-white"
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+        {/* Desktop */}
+        <div className="hidden items-center gap-6 md:flex">
+          <nav className="flex items-center gap-6 text-sm font-medium text-gray-700 dark:text-gray-300">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="transition hover:text-black dark:hover:text-white"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
 
+          {/* Theme Toggle */}
+          <ThemeToggle />
+        </div>
+
+        {/* Mobile Menu Button */}
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
@@ -46,6 +54,7 @@ export default function Navbar() {
         </button>
       </div>
 
+      {/* Mobile Menu */}
       {isOpen && (
         <div className="border-t border-gray-200 bg-white px-4 py-4 dark:border-gray-800 dark:bg-black md:hidden">
           <nav className="flex flex-col gap-4 text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -59,6 +68,11 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+
+            {/* Theme Toggle in mobile */}
+            <div className="pt-2">
+              <ThemeToggle />
+            </div>
           </nav>
         </div>
       )}
