@@ -38,19 +38,19 @@ export default function ProjectsPage() {
           subtitle="Explore innovative projects created by STEM students."
         />
 
-        <div className="mb-8 flex flex-col gap-4 rounded-2xl border bg-white p-4 shadow-sm md:flex-row md:items-center md:justify-between">
+        <div className="mb-8 flex flex-col gap-4 rounded-2xl border bg-white dark:bg-zinc-950 p-4 shadow-sm md:flex-row md:items-center md:justify-between">
           <input
             type="text"
             placeholder="Search projects by title..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black md:max-w-md"
+            className="w-full rounded-xl border border-gray-300 dark:border-zinc-700 px-4 py-3 text-sm outline-none transition focus:border-black md:max-w-md"
           />
 
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black"
+            className="rounded-xl border border-gray-300 dark:border-zinc-700 px-4 py-3 text-sm outline-none transition focus:border-black"
           >
             {categories.map((category) => (
               <option key={category} value={category}>
@@ -60,7 +60,7 @@ export default function ProjectsPage() {
           </select>
         </div>
 
-        <div className="mb-6 text-sm text-gray-600">
+        <div className="mb-6 text-sm text-gray-600 dark:text-zinc-400">
           Showing {filteredProjects.length} project
           {filteredProjects.length !== 1 ? "s" : ""}
         </div>

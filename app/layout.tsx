@@ -16,11 +16,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen bg-white text-gray-900 dark:bg-zinc-950 dark:text-white">
+      <body className="min-h-screen bg-white dark:bg-zinc-950 text-gray-900 dark:text-white dark:bg-zinc-950 dark:text-white">
         <ThemeProvider>
           <div className="flex min-h-screen flex-col">
             <Navbar />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 bg-white dark:bg-zinc-950 dark:bg-zinc-950">
+              {children}
+            </main>
             <Footer />
           </div>
         </ThemeProvider>

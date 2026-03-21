@@ -16,7 +16,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="w-full border-b border-gray-200 bg-white dark:border-gray-800 dark:bg-black">
+    <header className="w-full border-b border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 dark:border-gray-800 dark:bg-black">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
         <Link
           href="/"
@@ -27,7 +27,7 @@ export default function Navbar() {
 
         {/* Desktop */}
         <div className="hidden items-center gap-6 md:flex">
-          <nav className="flex items-center gap-6 text-sm font-medium text-gray-700 dark:text-gray-300">
+          <nav className="flex items-center gap-6 text-sm font-medium text-gray-700 dark:text-zinc-300 dark:text-gray-300">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -47,7 +47,7 @@ export default function Navbar() {
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
-          className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 dark:border-gray-700 dark:text-gray-300 md:hidden"
+          className="rounded-lg border border-gray-300 dark:border-zinc-700 px-3 py-2 text-sm text-gray-700 dark:text-zinc-300 dark:border-gray-700 dark:text-gray-300 md:hidden"
           aria-label="Toggle menu"
         >
           {isOpen ? "Close" : "Menu"}
@@ -56,8 +56,8 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="border-t border-gray-200 bg-white px-4 py-4 dark:border-gray-800 dark:bg-black md:hidden">
-          <nav className="flex flex-col gap-4 text-sm font-medium text-gray-700 dark:text-gray-300">
+        <div className="border-t border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-4 py-4 dark:border-gray-800 dark:bg-black md:hidden">
+          <nav className="flex flex-col gap-4 text-sm font-medium text-gray-700 dark:text-zinc-300 dark:text-gray-300">
             {navLinks.map((link) => (
               <Link
                 key={link.href}

@@ -32,17 +32,17 @@ export default function ProjectDetailsPage({ params }: ProjectDetailsPageProps) 
               {project.category} • {project.grade}
             </p>
 
-            <h1 className="mb-4 text-4xl font-bold text-gray-900">
+            <h1 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
               {project.title}
             </h1>
 
-            <p className="mb-6 leading-7 text-gray-600">
+            <p className="mb-6 leading-7 text-gray-600 dark:text-zinc-400">
               {project.fullDescription}
             </p>
 
             <div className="mb-4">
               <h2 className="mb-2 text-lg font-semibold">Team Members</h2>
-              <ul className="space-y-1 text-gray-600">
+              <ul className="space-y-1 text-gray-600 dark:text-zinc-400">
                 {project.team.map((member) => (
                   <li key={member}>{member}</li>
                 ))}
@@ -52,7 +52,7 @@ export default function ProjectDetailsPage({ params }: ProjectDetailsPageProps) 
             {project.supervisor && (
               <div className="mb-4">
                 <h2 className="mb-2 text-lg font-semibold">Supervisor</h2>
-                <p className="text-gray-600">{project.supervisor}</p>
+                <p className="text-gray-600 dark:text-zinc-400">{project.supervisor}</p>
               </div>
             )}
 
@@ -62,7 +62,7 @@ export default function ProjectDetailsPage({ params }: ProjectDetailsPageProps) 
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700"
+                    className="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700 dark:text-zinc-300"
                   >
                     {tag}
                   </span>

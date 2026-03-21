@@ -8,7 +8,7 @@ type ProjectCardProps = {
 
 export default function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <div className="flex h-full flex-col overflow-hidden rounded-2xl border bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+    <div className="flex h-full flex-col overflow-hidden rounded-2xl border bg-white dark:bg-zinc-950 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
       <div className="relative h-52 w-full bg-gray-100">
         <Image
           src={project.image}
@@ -25,11 +25,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           <span>{project.grade}</span>
         </div>
 
-        <h3 className="mb-2 text-xl font-bold text-gray-900">
+        <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
           {project.title}
         </h3>
 
-        <p className="mb-4 text-sm leading-6 text-gray-600">
+        <p className="mb-4 text-sm leading-6 text-gray-600 dark:text-zinc-400">
           {project.shortDescription}
         </p>
 
@@ -37,7 +37,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700"
+              className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700 dark:text-zinc-300"
             >
               {tag}
             </span>
