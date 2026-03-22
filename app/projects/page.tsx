@@ -38,19 +38,19 @@ export default function ProjectsPage() {
           subtitle="Explore innovative projects created by STEM students."
         />
 
-        <div className="mb-8 flex flex-col gap-4 rounded-2xl border bg-white dark:bg-zinc-950 p-4 shadow-sm md:flex-row md:items-center md:justify-between">
+        <div className="mb-8 flex flex-col gap-4 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800 md:flex-row md:items-center md:justify-between">
           <input
             type="text"
             placeholder="Search projects by title..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded-xl border border-gray-300 dark:border-zinc-700 px-4 py-3 text-sm outline-none transition focus:border-black md:max-w-md"
+            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-600 dark:bg-slate-900 dark:text-white md:max-w-md"
           />
 
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="rounded-xl border border-gray-300 dark:border-zinc-700 px-4 py-3 text-sm outline-none transition focus:border-black"
+            className="rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-600 dark:bg-slate-900 dark:text-white"
           >
             {categories.map((category) => (
               <option key={category} value={category}>
@@ -60,7 +60,7 @@ export default function ProjectsPage() {
           </select>
         </div>
 
-        <div className="mb-6 text-sm text-gray-600 dark:text-zinc-400">
+        <div className="mb-6 text-sm text-gray-600 dark:text-slate-300">
           Showing {filteredProjects.length} project
           {filteredProjects.length !== 1 ? "s" : ""}
         </div>
@@ -68,7 +68,7 @@ export default function ProjectsPage() {
         {filteredProjects.length > 0 ? (
           <ProjectsGrid projects={filteredProjects} />
         ) : (
-          <div className="rounded-2xl border border-dashed p-10 text-center text-gray-500">
+          <div className="rounded-2xl border border-dashed border-gray-300 bg-gray-50 p-10 text-center text-gray-500 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-300">
             No projects found matching your search.
           </div>
         )}

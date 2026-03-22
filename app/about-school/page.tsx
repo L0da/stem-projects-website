@@ -10,7 +10,7 @@ export default function AboutSchoolPage() {
           subtitle="Learn more about our mission, vision, and educational approach."
         />
 
-        <div className="mx-auto max-w-3xl space-y-6 text-lg text-gray-600 dark:text-zinc-400 dark:text-gray-300">
+        <div className="mx-auto max-w-3xl space-y-6 text-lg text-gray-600 dark:text-slate-300 dark:text-gray-300">
           <p>
             Our STEM school focuses on developing students through project-based
             learning, critical thinking, and innovation.
