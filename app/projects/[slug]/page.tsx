@@ -1,94 +1,97 @@
-import { notFound } from "next/navigation";
+"use client";
+
+import { useParams } from "next/navigation";
 import Image from "next/image";
 import Container from "@/components/ui/Container";
 import { projects } from "@/data/projects";
+import { useLanguage } from "@/components/providers/language-provider";
 
-type ProjectDetailsPageProps = {
-  params: {
-    slug: string;
-  };
-};
+export default function ProjectDetailsPage() {
+  const { t, locale } = useLanguage();
+  const params = useParams();
 
-export default function ProjectDetailsPage({ params }: ProjectDetailsPageProps) {
-  const project = projects.find((item) => item.slug === params.slug);
+  const slug = params?.slug as string;
+  const project = projects.find((item) => item.slug === slug);
 
-  if (!project) return notFound();
+  if (!project) {
+    return (
+      <div className="py-20 text-center text-red-500">
+        Project not found
+      </div>
+    );
+  }
+
+  const content = locale === "ar" ? project.ar : project.en;
 
   return (
     <main className="py-16">
       <Container>
         <div className="grid gap-10 lg:grid-cols-2">
-          
-          {/* Image */}
           <div className="relative h-[300px] overflow-hidden rounded-2xl bg-gray-100 dark:bg-slate-700 md:h-[450px]">
             <Image
               src={project.image}
-              alt={project.title}
+              alt={content.title}
               fill
               className="object-cover"
             />
           </div>
 
-          {/* Content */}
           <div>
-            
-            {/* Meta */}
             <p className="mb-2 text-sm font-medium text-gray-500 dark:text-slate-300">
-              {project.category} • {project.grade}
+              {content.category} • {content.grade}
             </p>
 
-            {/* Title */}
             <h1 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
-              {project.title}
+              {content.title}
             </h1>
 
-            {/* Description */}
             <p className="mb-6 leading-7 text-gray-600 dark:text-slate-300">
-              {project.fullDescription}
+              {content.fullDescription}
             </p>
 
-            {/* Team */}
             <div className="mb-6">
               <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-                Team Members
+                {t.projectDetails.teamMembers}
               </h2>
               <ul className="space-y-1 text-gray-600 dark:text-slate-300">
-                {project.team.map((member) => (
+                {(locale === "ar" && project.teamAr
+                  ? project.teamAr
+                  : project.team
+                ).map((member) => (
                   <li key={member}>{member}</li>
                 ))}
               </ul>
             </div>
 
-            {/* Supervisor */}
             {project.supervisor && (
               <div className="mb-6">
                 <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-                  Supervisor
+                  {t.projectDetails.supervisor}
                 </h2>
                 <p className="text-gray-600 dark:text-slate-300">
-                  {project.supervisor}
+                  {locale === "ar" && project.supervisorAr
+                    ? project.supervisorAr
+                    : project.supervisor}
                 </p>
               </div>
             )}
 
-            {/* Tags */}
             <div>
               <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-                Tags
+                {t.projectDetails.tags}
               </h2>
 
               <div className="flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
+                {content.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700 dark:bg-slate-700 dark:text-zinc-300"
+                    className="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700 dark:bg-slate-700 dark:text-slate-200"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
             </div>
-
           </div>
         </div>
       </Container>

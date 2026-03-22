@@ -1,14 +1,21 @@
+export type ProjectTranslation = {
+  title: string;
+  shortDescription: string;
+  fullDescription: string;
+  category: string;
+  grade: string;
+  tags: string[];
+};
+
 export type Project = {
   id: string;
   slug: string;
-  title: string;
-  category: string;
-  grade: string;
   team: string[];
+  teamAr?: string[];
   supervisor?: string;
-  shortDescription: string;
-  fullDescription: string;
+  supervisorAr?: string;
   image: string;
-  tags: string[];
   featured?: boolean;
+  en: ProjectTranslation;
+  ar: ProjectTranslation;
 };

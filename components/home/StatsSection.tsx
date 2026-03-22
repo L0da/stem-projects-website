@@ -1,12 +1,24 @@
-import Container from "@/components/ui/Container";
+"use client";
 
-const stats = [
-  { label: "Projects", value: "50+" },
-  { label: "Students", value: "120+" },
-  { label: "Fields", value: "8+" },
-];
+import Container from "@/components/ui/Container";
+import { useLanguage } from "@/components/providers/language-provider";
 
 export default function StatsSection() {
+  const { locale } = useLanguage();
+
+  const stats =
+    locale === "ar"
+      ? [
+          { label: "مشروع", value: "50+" },
+          { label: "طالب", value: "120+" },
+          { label: "مجال", value: "8+" },
+        ]
+      : [
+          { label: "Projects", value: "50+" },
+          { label: "Students", value: "120+" },
+          { label: "Fields", value: "8+" },
+        ];
+
   return (
     <section className="py-12 sm:py-16">
       <Container>

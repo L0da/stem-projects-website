@@ -3,17 +3,20 @@
 import Link from "next/link";
 import { useState } from "react";
 import ThemeToggle from "@/components/ui/theme-toggle";
-
-const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/about-school", label: "About School" },
-  { href: "/about-stem", label: "About STEM" },
-  { href: "/projects", label: "Projects" },
-  { href: "/contact", label: "Contact" },
-];
+import LanguageToggle from "@/components/ui/language-toggle";
+import { useLanguage } from "@/components/providers/language-provider";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useLanguage();
+
+  const navLinks = [
+    { href: "/", label: t.nav.home },
+    { href: "/about-school", label: t.nav.aboutSchool },
+    { href: "/about-stem", label: t.nav.aboutStem },
+    { href: "/projects", label: t.nav.projects },
+    { href: "/contact", label: t.nav.contact },
+  ];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/90 backdrop-blur dark:border-slate-700 dark:bg-slate-900/90">
@@ -22,12 +25,11 @@ export default function Navbar() {
           href="/"
           className="text-lg font-bold tracking-tight text-blue-700 transition hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 sm:text-xl"
         >
-          STEM Projects
+          {t.siteName}
         </Link>
 
-        {/* Desktop */}
         <div className="hidden items-center gap-6 md:flex">
-          <nav className="flex items-center gap-6 text-sm font-medium text-gray-700 dark:text-zinc-300">
+          <nav className="flex items-center gap-6 text-sm font-medium text-gray-700 dark:text-slate-300">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -39,23 +41,24 @@ export default function Navbar() {
             ))}
           </nav>
 
-          <ThemeToggle />
+          <div className="flex items-center gap-3">
+            <LanguageToggle />
+            <ThemeToggle />
+          </div>
         </div>
 
-        {/* Mobile Button */}
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
-          className="rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 dark:border-slate-600 dark:text-zinc-300 dark:hover:bg-slate-700 md:hidden"
+          className="rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800 md:hidden"
         >
-          {isOpen ? "Close" : "Menu"}
+          {isOpen ? t.menu.close : t.menu.open}
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {isOpen && (
         <div className="border-t border-gray-200 bg-white px-4 py-4 dark:border-slate-700 dark:bg-slate-900 md:hidden">
-          <nav className="flex flex-col gap-4 text-sm font-medium text-gray-700 dark:text-zinc-300">
+          <nav className="flex flex-col gap-4 text-sm font-medium text-gray-700 dark:text-slate-300">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -67,7 +70,8 @@ export default function Navbar() {
               </Link>
             ))}
 
-            <div className="pt-2">
+            <div className="flex items-center gap-3 pt-2">
+              <LanguageToggle />
               <ThemeToggle />
             </div>
           </nav>

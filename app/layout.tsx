@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { LanguageProvider } from "@/components/providers/language-provider";
 
 export const metadata: Metadata = {
   title: "STEM Projects Website",
@@ -18,16 +19,13 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen bg-white text-gray-900 dark:bg-slate-900 dark:text-white">
         <ThemeProvider>
-          <div className="flex min-h-screen flex-col">
-            <Navbar />
-
-            {/* مهم جدًا: الخلفية الأساسية */}
-            <main className="flex-1">
-              {children}
-            </main>
-
-            <Footer />
-          </div>
+          <LanguageProvider>
+            <div className="flex min-h-screen flex-col">
+              <Navbar />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

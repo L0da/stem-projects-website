@@ -1,27 +1,21 @@
+"use client";
+
 import Container from "@/components/ui/Container";
 import SectionTitle from "@/components/ui/SectionTitle";
+import { useLanguage } from "@/components/providers/language-provider";
 
 export default function AboutSchoolPage() {
-  return (
-    <section className="py-20">
-      <Container>
-        <SectionTitle
-          title="About Our School"
-          subtitle="Learn more about our mission, vision, and educational approach."
-        />
+  const { t } = useLanguage();
 
-        <div className="mx-auto max-w-3xl space-y-6 text-lg text-gray-600 dark:text-slate-300 dark:text-gray-300">
-          <p>
-            Our STEM school focuses on developing students through project-based
-            learning, critical thinking, and innovation.
-          </p>
-          <p>
-            We aim to prepare students for future challenges by integrating
-            science, technology, engineering, and mathematics in real-world
-            applications.
-          </p>
+  return (
+    <main className="py-16">
+      <Container>
+        <SectionTitle title={t.aboutSchool.title} />
+
+        <div className="mx-auto max-w-3xl text-center text-lg leading-8 text-gray-600 dark:text-slate-300">
+          <p>{t.aboutSchool.content}</p>
         </div>
       </Container>
-    </section>
+    </main>
   );
 }
