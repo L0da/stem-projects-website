@@ -26,6 +26,10 @@ export const translations = {
       noResults: "No projects found matching your search.",
       categoryLabel: "Category",
       viewDetails: "View Details",
+      gradeLabel: "Grade",
+      allGrades: "All Grades",
+      clearFilters: "Clear Filters",
+      emptyHint: "Try changing the search term or clearing filters.",
     },
     projectDetails: {
       teamMembers: "Team Members",
@@ -56,6 +60,27 @@ export const translations = {
       close: "Close",
     },
     siteName: "STEM Projects",
+    featuredProjects: {
+      title: "Featured Projects",
+      subtitle: "A selection of standout student projects.",
+      viewAll: "View All Projects",
+    },
+    visionMission: {
+      title: "Vision & Mission",
+      visionTitle: "STEM Program Vision",
+      visionText:
+        "Developing a generation of creative and innovative students capable of solving problems using science, technology, engineering, and mathematics, and preparing them to face future challenges.",
+      missionTitle: "Mission",
+      missionText:
+        "Providing an interactive educational environment that supports critical thinking and creativity, and enables students to apply scientific knowledge in practical projects that serve society and contribute to building a sustainable future.",
+    },
+    stemVideo: {
+      title: "What is STEM?",
+      subtitle: "Watch a quick introduction to STEM education and how it shapes innovative student learning.",
+      watchVideo: "Watch Video",
+      learnMore: "Learn More About STEM",
+      close: "Close",
+    },
   },
   ar: {
     nav: {
@@ -84,6 +109,10 @@ export const translations = {
       noResults: "لا توجد مشاريع مطابقة لبحثك.",
       categoryLabel: "التصنيف",
       viewDetails: "عرض التفاصيل",
+      gradeLabel: "الصف",
+      allGrades: "كل الصفوف",
+      clearFilters: "مسح الفلاتر",
+      emptyHint: "جرّب تغيير كلمة البحث أو مسح الفلاتر.",
     },
     projectDetails: {
       teamMembers: "أعضاء الفريق",
@@ -113,6 +142,27 @@ export const translations = {
       close: "إغلاق",
     },
     siteName: "مشاريع STEM",
+    featuredProjects: {
+      title: "المشاريع المميزة",
+      subtitle: "مجموعة من أبرز مشاريع الطلاب.",
+      viewAll: "عرض كل المشاريع",
+    },
+    visionMission: {
+      title: "الرؤية والرسالة",
+      visionTitle: "رؤية برنامج STEM",
+      visionText:
+        "تطوير جيل من الطلاب المبدعين والمبتكرين القادرين على حل المشكلات باستخدام العلوم والتكنولوجيا والهندسة والرياضيات، وإعدادهم لمواجهة تحديات المستقبل.",
+      missionTitle: "الرسالة",
+      missionText:
+        "توفير بيئة تعليمية تفاعلية تدعم التفكير النقدي والإبداع، وتمكن الطلاب من تطبيق المعرفة العلمية في مشاريع عملية تخدم المجتمع وتساهم في بناء مستقبل مستدام.",
+    },
+    stemVideo: {
+      title: "ما هو STEM؟",
+      subtitle: "شاهد مقدمة سريعة عن تعليم STEM وكيف يساهم في بناء تعلم مبتكر للطلاب.",
+      watchVideo: "شاهد الفيديو",
+      learnMore: "اعرف أكثر عن STEM",
+      close: "إغلاق",
+    },
   },
 };
 

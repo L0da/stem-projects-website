@@ -39,6 +39,7 @@ export const projects: Project[] = [
     supervisor: "Mr. Adel",
     supervisorAr: "أ. عادل",
     image: "/projects/project-2.png",
+    featured: true,
     en: {
       title: "Smart light system",
       category: "Engineering",
@@ -67,6 +68,7 @@ export const projects: Project[] = [
     supervisor: "Mr. Mohamed",
     supervisorAr: "أ. محمد",
     image: "/projects/project-3.png",
+    featured: true,
     en: {
       title: "Rain alarm",
       category: "Science",
