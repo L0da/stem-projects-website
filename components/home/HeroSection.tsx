@@ -9,7 +9,7 @@ export default function HeroSection() {
   const { t, locale } = useLanguage();
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-[#0f172a] to-[#020617] py-20 md:py-28">
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#0f172a] to-[#020617] py-16 md:py-20">
       {/* subtle background glow */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.18),transparent_30%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(59,130,246,0.12),transparent_25%)]" />
@@ -18,12 +18,12 @@ export default function HeroSection() {
         <div className="relative grid items-center gap-12 lg:grid-cols-2">
           {/* Text */}
           <div className={`space-y-8 ${locale === "ar" ? "lg:text-right" : "lg:text-left"} text-center`}>
-            <div className="inline-flex rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-2 text-sm font-medium text-blue-300">
+            <div className="inline-flex rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-2 text-sm font-medium text-blue-300 backdrop-blur-sm">
               {t.hero.badge}
             </div>
 
             <div className="space-y-5">
-              <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
+              <h1 className="text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl">
                 {t.hero.title}
               </h1>
 
@@ -41,14 +41,14 @@ export default function HeroSection() {
             >
               <Link
                 href="/projects"
-                className="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-6 py-3 text-base font-semibold text-white transition hover:bg-blue-700 hover:scale-[1.02]"
+                className="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700 hover:scale-[1.03]"
               >
                 {t.hero.viewProjects}
               </Link>
 
               <Link
                 href="/about-stem"
-                className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-6 py-3 text-base font-semibold text-white transition hover:bg-white/10"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-3 text-base font-semibold text-white/90 transition hover:bg-white/10 hover:text-white"
               >
                 {t.hero.learnAboutStem}
               </Link>
@@ -57,13 +57,13 @@ export default function HeroSection() {
 
           {/* Image */}
           <div className="relative">
-            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-2xl">
+            <div className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-2xl transition duration-500 hover:shadow-blue-500/10">
               <Image
                 src="/projects/hero-stem.jpg"
                 alt="STEM students working on projects"
                 width={900}
                 height={700}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]"
                 priority
               />
 

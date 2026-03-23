@@ -59,7 +59,7 @@ export default function StemVideoSection() {
 
   const textBlock = (
     <div className={locale === "ar" ? "text-right" : "text-left"}>
-      <div className="inline-flex rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-300">
+      <div className="inline-flex rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-300 backdrop-blur-sm">
         {locale === "ar" ? "تعرّف على STEM" : "Discover STEM"}
       </div>
 
@@ -78,7 +78,7 @@ export default function StemVideoSection() {
       >
         <Link
           href="/about-stem"
-          className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+          className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-3 text-base font-semibold text-white/90 transition hover:bg-white/10 hover:text-white"
         >
           {t.stemVideo.learnMore}
         </Link>
@@ -89,10 +89,13 @@ export default function StemVideoSection() {
   return (
     <section className="py-16 sm:py-20">
       <Container>
-        <div className="rounded-3xl border border-white/10 bg-slate-900/50 p-6 shadow-[0_10px_40px_rgba(0,0,0,0.25)] backdrop-blur-sm sm:p-8 lg:p-10">
+        <div className="relative overflow-hidden rounded-3xl border border-cyan-400/10 bg-gradient-to-br from-slate-900/80 via-slate-900/65 to-[#081735]/80 p-6 shadow-[0_20px_60px_rgba(0,0,0,0.30)] backdrop-blur-sm sm:p-8 lg:p-10">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(34,211,238,0.10),transparent_28%)]" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(59,130,246,0.10),transparent_30%)]" />
+
           <div
             ref={sectionRef}
-            className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_420px]"
+            className="relative grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_420px]"
           >
             {textBlock}
             {videoBlock}

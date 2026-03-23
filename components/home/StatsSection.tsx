@@ -1,14 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Container from "@/components/ui/Container";
 import { useLanguage } from "@/components/providers/language-provider";
-import { Users, FolderKanban, Layers } from "lucide-react";
+import { Users, FolderKanban, Layers, LucideIcon } from "lucide-react";
+
+type StatItem = {
+  label: string;
+  value: number;
+  icon: LucideIcon;
+};
 
 export default function StatsSection() {
   const { locale } = useLanguage();
 
-  const stats =
+  const stats: StatItem[] =
     locale === "ar"
       ? [
           { label: "مشروع", value: 50, icon: FolderKanban },
@@ -24,12 +30,11 @@ export default function StatsSection() {
   return (
     <section className="py-16 sm:py-20">
       <Container>
-        {/* Title */}
         <div className="mb-10 text-center">
           <h2 className="text-2xl font-bold text-white sm:text-3xl">
             {locale === "ar" ? "إحصائيات المنصة" : "Platform Statistics"}
           </h2>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-slate-400 sm:text-base">
             {locale === "ar"
               ? "نظرة سريعة على إنجازات المنصة"
               : "A quick look at platform achievements"}
@@ -38,7 +43,7 @@ export default function StatsSection() {
 
         <div className="grid gap-6 md:grid-cols-3">
           {stats.map((stat, index) => (
-            <StatCard key={index} {...stat} />
+            <StatCard key={stat.label} {...stat} index={index} />
           ))}
         </div>
       </Container>
@@ -46,47 +51,104 @@ export default function StatsSection() {
   );
 }
 
-function StatCard({ label, value, icon: Icon }: any) {
+function StatCard({
+  label,
+  value,
+  icon: Icon,
+  index,
+}: StatItem & { index: number }) {
   const [count, setCount] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
+  const cardRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    const node = cardRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasStarted(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.35 }
+    );
+
+    observer.observe(node);
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!hasStarted) return;
+
     let start = 0;
     const duration = 1200;
-    const increment = value / (duration / 16);
+    const stepTime = 16;
+    const increment = value / (duration / stepTime);
 
     const counter = setInterval(() => {
       start += increment;
+
       if (start >= value) {
         setCount(value);
         clearInterval(counter);
       } else {
         setCount(Math.floor(start));
       }
-    }, 16);
+    }, stepTime);
 
     return () => clearInterval(counter);
-  }, [value]);
+  }, [hasStarted, value]);
+
+  const animationClass =
+    index === 0
+      ? "animate-[spin_5s_linear_infinite]"
+      : index === 1
+        ? "animate-[spin_7s_linear_infinite]"
+        : "animate-[spin_6s_linear_infinite]";
 
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-slate-900/60 p-8 text-center backdrop-blur transition-all duration-300 hover:-translate-y-2 hover:border-blue-500/30 hover:shadow-[0_10px_40px_rgba(37,99,235,0.15)]">
-      
-      {/* Glow effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-blue-500/0 to-blue-500/10 opacity-0 transition group-hover:opacity-100" />
+    <div className="group relative overflow-hidden rounded-2xl p-[1px]">
+      {/* Animated moving partial border */}
+      <div className="absolute inset-0 rounded-2xl overflow-hidden">
+        <div
+          className={`${animationClass} absolute inset-0 bg-[conic-gradient(from_0deg,transparent_0deg,transparent_260deg,rgba(59,130,246,0.9)_300deg,rgba(59,130,246,0.9)_320deg,transparent_360deg)]`}
+        />
 
-      {/* Icon */}
-      <div className="mb-4 flex justify-center">
-        <Icon className="h-8 w-8 text-blue-400" />
+        {/* glow */}
+        <div
+          className={`${animationClass} absolute inset-0 blur-md opacity-60 bg-[conic-gradient(from_0deg,transparent_0deg,transparent_260deg,rgba(59,130,246,0.6)_300deg,rgba(59,130,246,0.6)_320deg,transparent_360deg)]`}
+        />
       </div>
 
-      {/* Number */}
-      <h3 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 sm:text-5xl">
-        +{count}
-      </h3>
+      {/* Inner mask */}
+      <div className="absolute inset-[1px] rounded-2xl bg-[#081633]" />
 
-      {/* Label */}
-      <p className="mt-3 text-sm text-slate-400 sm:text-base">
-        {label}
-      </p>
+      {/* Card content */}
+      <div
+        ref={cardRef}
+        className="relative overflow-hidden rounded-2xl border border-white/10 bg-slate-900/50 p-6 text-center backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-500/20 hover:shadow-[0_12px_40px_rgba(37,99,235,0.14)] sm:p-7"
+      >
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/40 to-transparent" />
+
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-blue-500/0 to-blue-500/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+        <div className="relative mb-4 flex justify-center">
+          <div className="rounded-2xl bg-blue-500/10 p-3 ring-1 ring-blue-400/20">
+            <Icon className="h-7 w-7 text-blue-400" />
+          </div>
+        </div>
+
+        <h3 className="relative bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-5xl font-extrabold tracking-tight text-transparent sm:text-6xl">
+          {count}+
+        </h3>
+
+        <p className="relative mt-3 text-sm font-medium text-slate-300 sm:text-base">
+          {label}
+        </p>
+      </div>
     </div>
   );
 }
