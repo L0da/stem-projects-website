@@ -4,15 +4,39 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import Container from "@/components/ui/Container";
-import { projects } from "@/data/projects";
 import { useLanguage } from "@/components/providers/language-provider";
+import { getProjectBySlug } from "@/lib/supabase/projects";
+import { Project } from "@/types/project";
 
 export default function ProjectDetailsPage() {
   const { t, locale } = useLanguage();
   const params = useParams();
 
   const slug = params?.slug as string;
-  const project = projects.find((item) => item.slug === slug);
+
+  const [project, setProject] = useState<Project | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  useEffect(() => {
+    async function loadProject() {
+      try {
+        setLoading(true);
+        const data = await getProjectBySlug(slug);
+        setProject(data);
+      } catch (error) {
+        console.error("Failed to load project:", error);
+        setProject(null);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (slug) {
+      loadProject();
+    }
+  }, [slug]);
 
   const content = project ? (locale === "ar" ? project.ar : project.en) : null;
 
@@ -27,12 +51,26 @@ export default function ProjectDetailsPage() {
     return ["/images/placeholder.jpg"];
   }, [project]);
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-
   useEffect(() => {
     setSelectedIndex(0);
   }, [slug]);
+
+  function goToNext() {
+    if (galleryImages.length === 0) return;
+    setSelectedIndex((prev) => (prev + 1) % galleryImages.length);
+  }
+
+  function goToPrev() {
+    if (galleryImages.length === 0) return;
+    setSelectedIndex(
+      (prev) => (prev - 1 + galleryImages.length) % galleryImages.length
+    );
+  }
+
+  function openLightbox(index: number) {
+    setSelectedIndex(index);
+    setIsLightboxOpen(true);
+  }
 
   useEffect(() => {
     if (galleryImages.length <= 1 || isLightboxOpen) return;
@@ -74,6 +112,14 @@ export default function ProjectDetailsPage() {
     };
   }, [isLightboxOpen, locale, galleryImages.length]);
 
+  if (loading) {
+    return (
+      <div className="py-20 text-center text-gray-500 dark:text-slate-300">
+        {locale === "ar" ? "جارٍ تحميل المشروع..." : "Loading project..."}
+      </div>
+    );
+  }
+
   if (!project || !content) {
     return (
       <div className="py-20 text-center text-red-500">
@@ -82,26 +128,13 @@ export default function ProjectDetailsPage() {
     );
   }
 
-  const selectedImage = galleryImages[selectedIndex] || "/images/placeholder.jpg";
-
-  function goToNext() {
-    setSelectedIndex((prev) => (prev + 1) % galleryImages.length);
-  }
-
-  function goToPrev() {
-    setSelectedIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
-  }
-
-  function openLightbox(index: number) {
-    setSelectedIndex(index);
-    setIsLightboxOpen(true);
-  }
+  const selectedImage =
+    galleryImages[selectedIndex] || "/images/placeholder.jpg";
 
   return (
     <main className="pb-20">
       <Container>
         <div className="grid gap-10 pt-12 lg:grid-cols-2">
-          {/* Gallery */}
           <div>
             <div
               className="group relative mb-4 h-[300px] cursor-zoom-in overflow-hidden rounded-3xl bg-gray-100 shadow-lg dark:bg-slate-800 md:h-[460px]"
@@ -131,7 +164,9 @@ export default function ProjectDetailsPage() {
                       goToPrev();
                     }}
                     className="absolute left-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/45 text-white backdrop-blur-sm transition hover:bg-black/65"
-                    aria-label={locale === "ar" ? "الصورة السابقة" : "Previous image"}
+                    aria-label={
+                      locale === "ar" ? "الصورة السابقة" : "Previous image"
+                    }
                   >
                     {locale === "ar" ? "→" : "←"}
                   </button>
@@ -143,7 +178,9 @@ export default function ProjectDetailsPage() {
                       goToNext();
                     }}
                     className="absolute right-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/45 text-white backdrop-blur-sm transition hover:bg-black/65"
-                    aria-label={locale === "ar" ? "الصورة التالية" : "Next image"}
+                    aria-label={
+                      locale === "ar" ? "الصورة التالية" : "Next image"
+                    }
                   >
                     {locale === "ar" ? "←" : "→"}
                   </button>
@@ -182,7 +219,6 @@ export default function ProjectDetailsPage() {
             )}
           </div>
 
-          {/* Content */}
           <div>
             <div className="mb-4 flex flex-wrap items-center gap-2">
               <span className="rounded-full bg-blue-100 px-4 py-1 text-sm font-medium text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
@@ -235,11 +271,12 @@ export default function ProjectDetailsPage() {
               </h3>
 
               <ul className="space-y-1 text-gray-600 dark:text-slate-300">
-                {(locale === "ar" && project.teamAr ? project.teamAr : project.team).map(
-                  (member) => (
-                    <li key={member}>{member}</li>
-                  )
-                )}
+                {(locale === "ar" && project.teamAr
+                  ? project.teamAr
+                  : project.team
+                ).map((member) => (
+                  <li key={member}>{member}</li>
+                ))}
               </ul>
             </div>
 
@@ -260,7 +297,6 @@ export default function ProjectDetailsPage() {
         </div>
       </Container>
 
-      {/* Lightbox */}
       {isLightboxOpen && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
@@ -284,7 +320,9 @@ export default function ProjectDetailsPage() {
                   goToPrev();
                 }}
                 className="absolute left-4 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-2xl text-white transition hover:bg-white/20"
-                aria-label={locale === "ar" ? "الصورة السابقة" : "Previous image"}
+                aria-label={
+                  locale === "ar" ? "الصورة السابقة" : "Previous image"
+                }
               >
                 {locale === "ar" ? "→" : "←"}
               </button>
@@ -296,7 +334,9 @@ export default function ProjectDetailsPage() {
                   goToNext();
                 }}
                 className="absolute right-4 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-2xl text-white transition hover:bg-white/20"
-                aria-label={locale === "ar" ? "الصورة التالية" : "Next image"}
+                aria-label={
+                  locale === "ar" ? "الصورة التالية" : "Next image"
+                }
               >
                 {locale === "ar" ? "←" : "→"}
               </button>

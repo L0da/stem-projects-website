@@ -1,7 +1,10 @@
 import { Suspense } from "react";
 import ProjectsPageClient from "./projects-page-client";
+import { getProjects } from "@/lib/supabase/projects";
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const projects = await getProjects();
+
   return (
     <Suspense
       fallback={
@@ -10,7 +13,7 @@ export default function ProjectsPage() {
         </div>
       }
     >
-      <ProjectsPageClient />
+      <ProjectsPageClient initialProjects={projects} />
     </Suspense>
   );
 }

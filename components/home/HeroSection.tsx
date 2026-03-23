@@ -21,7 +21,6 @@ export default function HeroSection() {
             <div className="inline-flex rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-2 text-sm font-medium text-blue-300 backdrop-blur-sm">
               {t.hero.badge}
             </div>
-
             <div className="space-y-5">
               <h1 className="text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl">
                 {t.hero.title}

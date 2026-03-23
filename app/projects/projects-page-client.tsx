@@ -3,12 +3,18 @@
 import { useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ProjectsGrid from "@/components/projects/projects-grid";
-import { projects } from "@/data/projects";
+import { Project } from "@/types/project";
 import Container from "@/components/ui/Container";
 import SectionTitle from "@/components/ui/SectionTitle";
 import { useLanguage } from "@/components/providers/language-provider";
 
-export default function ProjectsPageClient() {
+type ProjectsPageClientProps = {
+  initialProjects: Project[];
+};
+
+export default function ProjectsPageClient({
+  initialProjects,
+}: ProjectsPageClientProps) {
   const { t, locale } = useLanguage();
 
   const router = useRouter();
@@ -22,7 +28,7 @@ export default function ProjectsPageClient() {
   const categories = useMemo(() => {
     const uniqueCategories = Array.from(
       new Set(
-        projects.map((project) =>
+        initialProjects.map((project) =>
           locale === "ar" ? project.ar.category : project.en.category
         )
       )
@@ -34,7 +40,7 @@ export default function ProjectsPageClient() {
   const grades = useMemo(() => {
     const uniqueGrades = Array.from(
       new Set(
-        projects.map((project) =>
+        initialProjects.map((project) =>
           locale === "ar" ? project.ar.grade : project.en.grade
         )
       )
@@ -44,7 +50,7 @@ export default function ProjectsPageClient() {
   }, [locale]);
 
   const filteredProjects = useMemo(() => {
-    return projects.filter((project) => {
+    return initialProjects.filter((project) => {
       const content = locale === "ar" ? project.ar : project.en;
 
       const haystack = [
