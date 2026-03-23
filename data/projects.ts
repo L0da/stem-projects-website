@@ -10,6 +10,11 @@ export const projects: Project[] = [
     supervisor: "Mr. Hassan",
     supervisorAr: "أ. حسن",
     image: "/projects/project-1.png",
+    images: [
+      "/projects/project-1.png",
+      "/projects/project-1.png",
+      "/projects/project-1.png",
+    ],
     featured: true,
     en: {
       title: "Fire fighter robot",
@@ -39,6 +44,11 @@ export const projects: Project[] = [
     supervisor: "Mr. Adel",
     supervisorAr: "أ. عادل",
     image: "/projects/project-2.png",
+    images: [
+      "/projects/project-2.png",
+      "/projects/project-2.png",
+      "/projects/project-2.png",
+    ],
     featured: true,
     en: {
       title: "Smart light system",
@@ -68,6 +78,11 @@ export const projects: Project[] = [
     supervisor: "Mr. Mohamed",
     supervisorAr: "أ. محمد",
     image: "/projects/project-3.png",
+    images: [
+      "/projects/project-3.png",
+      "/projects/project-3.png",
+      "/projects/project-3.png",
+    ],
     featured: true,
     en: {
       title: "Rain alarm",
@@ -97,6 +112,11 @@ export const projects: Project[] = [
     supervisor: "Mr. Ali",
     supervisorAr: "أ. علي",
     image: "/projects/project-4.png",
+    images: [
+      "/projects/project-4.png",
+      "/projects/project-4.png",
+      "/projects/project-4.png",
+    ],
     en: {
       title: "Smart Home",
       category: "Software",

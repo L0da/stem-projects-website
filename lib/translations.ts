@@ -30,6 +30,7 @@ export const translations = {
       allGrades: "All Grades",
       clearFilters: "Clear Filters",
       emptyHint: "Try changing the search term or clearing filters.",
+      tryDifferentFilters: "Try changing filters or search keywords",
     },
     projectDetails: {
       teamMembers: "Team Members",
@@ -41,13 +42,11 @@ export const translations = {
       content:
         "Our STEM school focuses on innovation, critical thinking, and hands-on learning. Students are encouraged to explore science, technology, engineering, and mathematics through real-world projects.",
     },
-
     aboutStem: {
       title: "About STEM Education",
       content:
         "STEM education integrates science, technology, engineering, and mathematics into a cohesive learning model based on real-world applications. It prepares students for future careers and challenges.",
     },
-
     contact: {
       title: "Contact Us",
       subtitle: "We would love to hear from you.",
@@ -113,6 +112,7 @@ export const translations = {
       allGrades: "كل الصفوف",
       clearFilters: "مسح الفلاتر",
       emptyHint: "جرّب تغيير كلمة البحث أو مسح الفلاتر.",
+      tryDifferentFilters: "جرب تغيير الفلاتر أو البحث بكلمة مختلفة",
     },
     projectDetails: {
       teamMembers: "أعضاء الفريق",

@@ -14,51 +14,68 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   const content = locale === "ar" ? project.ar : project.en;
 
   return (
-    <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-slate-700 dark:bg-slate-800">
-      <div className="relative h-52 w-full bg-gray-100 dark:bg-slate-700">
-        <Image
-          src={project.image}
-          alt={content.title}
-          fill
-          className="object-cover"
-        />
-      </div>
+    <Link href={`/projects/${project.slug}`} className="group block h-full">
+      <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all duration-300 group-hover:-translate-y-2 group-hover:shadow-xl dark:border-slate-700 dark:bg-slate-800">
+        
+        {/* Image */}
+        <div className="relative h-52 w-full overflow-hidden">
+          <Image
+            src={project.image}
+            alt={content.title}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
+          />
 
-      <div className="flex flex-1 flex-col p-5">
-        <div className="mb-3 flex items-center gap-2 text-sm text-gray-500 dark:text-slate-300">
-          <span>{content.category}</span>
-          <span>•</span>
-          <span>{content.grade}</span>
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-black/0 transition group-hover:bg-black/10" />
         </div>
 
-        <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
-          {content.title}
-        </h3>
-
-        <p className="mb-4 text-sm leading-6 text-gray-600 dark:text-slate-300">
-          {content.shortDescription}
-        </p>
-
-        <div className="mb-4 flex flex-wrap gap-2">
-          {content.tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700 dark:bg-slate-700 dark:text-slate-200"
-            >
-              {tag}
+        {/* Content */}
+        <div className="flex flex-1 flex-col p-5">
+          
+          {/* Category + Grade */}
+          <div className="mb-3 flex items-center gap-2 text-xs">
+            <span className="rounded-full bg-blue-100 px-3 py-1 font-medium text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
+              {content.category}
             </span>
-          ))}
-        </div>
+            <span className="rounded-full bg-gray-100 px-3 py-1 font-medium text-gray-600 dark:bg-slate-700 dark:text-slate-300">
+              {content.grade}
+            </span>
+          </div>
 
-        <div className="mt-auto">
-          <Link
-            href={`/projects/${project.slug}`}
-            className="inline-block rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
-          >
-            {t.projectsPage.viewDetails}
-          </Link>
+          {/* Title */}
+          <h3 className="mb-2 line-clamp-2 text-lg font-bold text-gray-900 transition-colors group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400">
+            {content.title}
+          </h3>
+
+          {/* Description */}
+          <p className="mb-4 line-clamp-3 text-sm leading-6 text-gray-600 dark:text-slate-300">
+            {content.shortDescription}
+          </p>
+
+          {/* Tags */}
+          <div className="mb-4 flex flex-wrap gap-2">
+            {content.tags.slice(0, 3).map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700 transition dark:bg-slate-700 dark:text-slate-200"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          {/* Footer */}
+          <div className="mt-auto">
+            <div className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-all duration-300 group-hover:bg-blue-700 group-hover:shadow-lg dark:bg-blue-500 dark:group-hover:bg-blue-600">
+              <span>{t.projectsPage.viewDetails}</span>
+              <span className="transition-transform duration-300 group-hover:translate-x-1">
+                →
+              </span>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

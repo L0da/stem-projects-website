@@ -94,55 +94,100 @@ export default function ProjectsPageClient() {
         subtitle={t.projectsPage.subtitle}
       />
 
-      <div className="mt-10 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-        <div className="grid gap-4 md:grid-cols-4">
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder={t.projectsPage.searchPlaceholder}
-            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-950 dark:text-white md:col-span-2"
-          />
+      <div className="mt-10 overflow-hidden rounded-[28px] border border-white/10 bg-gradient-to-br from-[#0b1838] via-[#0a1733] to-[#09142d] shadow-[0_10px_40px_rgba(0,0,0,0.25)]">
+        <div className="border-b border-white/10 px-5 py-4 md:px-6">
+          <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+            <div>
+              <h2 className="text-base font-semibold text-white">
+                {locale === "ar" ? "تصفية المشاريع" : "Filter Projects"}
+              </h2>
+              <p className="text-sm text-slate-300">
+                {locale === "ar"
+                  ? "ابحث وفلتر المشاريع بسرعة حسب المجال أو الصف الدراسي"
+                  : "Search and filter projects quickly by category or grade"}
+              </p>
+            </div>
 
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
-          >
-            {categories.map((item) => (
-              <option key={item} value={item}>
-                {item === "all" ? t.projectsPage.allCategories : item}
-              </option>
-            ))}
-          </select>
-
-          <select
-            value={grade}
-            onChange={(e) => setGrade(e.target.value)}
-            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
-          >
-            {grades.map((item) => (
-              <option key={item} value={item}>
-                {item === "all" ? t.projectsPage.allGrades : item}
-              </option>
-            ))}
-          </select>
+            <div className="inline-flex w-fit items-center rounded-full border border-blue-400/20 bg-blue-500/10 px-3 py-1 text-xs font-medium text-blue-200">
+              {t.projectsPage.showing} {filteredProjects.length}{" "}
+              {filteredProjects.length === 1
+                ? t.projectsPage.project
+                : t.projectsPage.projects}
+            </div>
+          </div>
         </div>
 
-        <div className="mt-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          <p className="text-sm text-gray-600 dark:text-gray-300">
-            {t.projectsPage.showing} {filteredProjects.length}{" "}
-            {filteredProjects.length === 1
-              ? t.projectsPage.project
-              : t.projectsPage.projects}
-          </p>
+        <div className="p-5 md:p-6">
+          <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr_0.8fr]">
+            <div className="relative">
+              <span
+                className={`pointer-events-none absolute inset-y-0 flex items-center text-slate-400 ${
+                  locale === "ar" ? "right-4" : "left-4"
+                }`}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.3-4.3" />
+                </svg>
+              </span>
 
-          <button
-            onClick={clearFilters}
-            className="inline-flex w-fit items-center rounded-xl border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 dark:border-slate-700 dark:text-gray-200 dark:hover:bg-slate-800"
-          >
-            {t.projectsPage.clearFilters}
-          </button>
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder={t.projectsPage.searchPlaceholder}
+                className={`h-16 w-full rounded-2xl border border-white/10 bg-slate-950/70 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 ${
+                  locale === "ar" ? "pr-11 pl-4" : "pl-11 pr-4"
+                }`}
+              />
+            </div>
+
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="h-16 w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 text-sm text-white outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+            >
+              {categories.map((item) => (
+                <option key={item} value={item}>
+                  {item === "all" ? t.projectsPage.allCategories : item}
+                </option>
+              ))}
+            </select>
+
+            <select
+              value={grade}
+              onChange={(e) => setGrade(e.target.value)}
+              className="h-16 w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 text-sm text-white outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+            >
+              {grades.map((item) => (
+                <option key={item} value={item}>
+                  {item === "all" ? t.projectsPage.allGrades : item}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="mt-5 flex flex-col gap-3 border-t border-white/10 pt-5 md:flex-row md:items-center md:justify-between">
+            <div className="text-sm text-slate-300">
+              {locale === "ar"
+                ? "استخدم البحث أو الفلاتر للوصول للمشروع المناسب بسرعة."
+                : "Use search or filters to quickly find the right project."}
+            </div>
+
+            <button
+              onClick={clearFilters}
+              className="inline-flex w-fit items-center justify-center rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-white/10"
+            >
+              {t.projectsPage.clearFilters}
+            </button>
+          </div>
         </div>
       </div>
 
