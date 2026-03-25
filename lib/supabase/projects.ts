@@ -1,8 +1,8 @@
-import { createSupabaseClient } from "./client";
+import { createBrowserSupabaseClient } from "./client";
 import { Project } from "@/types/project";
 
 export async function getProjects(): Promise<Project[]> {
-  const supabase = createSupabaseClient();
+  const supabase = createBrowserSupabaseClient();
 
   const { data, error } = await supabase
     .from("projects")
@@ -10,24 +10,26 @@ export async function getProjects(): Promise<Project[]> {
     .order("created_at", { ascending: false });
 
   if (error) {
-    throw new Error(error.message);
+    console.error("Error fetching projects:", error);
+    return [];
   }
 
-  return (data ?? []) as Project[];
+  return data ?? [];
 }
 
 export async function getProjectBySlug(slug: string): Promise<Project | null> {
-  const supabase = createSupabaseClient();
+  const supabase = createBrowserSupabaseClient();
 
   const { data, error } = await supabase
     .from("projects")
     .select("*")
     .eq("slug", slug)
-    .maybeSingle();
+    .single();
 
   if (error) {
-    throw new Error(error.message);
+    console.error("Error fetching project by slug:", error);
+    return null;
   }
 
-  return (data as Project | null) ?? null;
+  return data;
 }

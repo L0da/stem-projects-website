@@ -145,6 +145,8 @@ export default function ProjectDetailsPage() {
                 alt={content.title}
                 fill
                 priority
+                loading="eager"
+                unoptimized
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
               />
@@ -209,6 +211,7 @@ export default function ProjectDetailsPage() {
                         src={img}
                         alt={`${content.title} ${index + 1}`}
                         fill
+                        unoptimized
                         sizes="(max-width: 640px) 33vw, 120px"
                         className="object-cover"
                       />
@@ -351,6 +354,7 @@ export default function ProjectDetailsPage() {
               src={selectedImage}
               alt={content.title}
               fill
+              unoptimized
               sizes="100vw"
               className="object-contain"
             />
