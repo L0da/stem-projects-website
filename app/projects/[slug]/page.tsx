@@ -7,6 +7,7 @@ import Container from "@/components/ui/Container";
 import { useLanguage } from "@/components/providers/language-provider";
 import { getProjectBySlug } from "@/lib/supabase/projects";
 import { Project } from "@/types/project";
+export const dynamic = "force-dynamic"
 
 export default function ProjectDetailsPage() {
   const { t, locale } = useLanguage();

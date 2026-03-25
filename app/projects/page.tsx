@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import ProjectsPageClient from "./projects-page-client";
 import { getProjects } from "@/lib/supabase/projects";
+export const dynamic = "force-dynamic"
 
 export default async function ProjectsPage() {
   const projects = await getProjects();
