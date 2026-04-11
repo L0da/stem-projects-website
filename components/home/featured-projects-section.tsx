@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { projects } from "@/data/projects";
 import Container from "@/components/ui/Container";
 import SectionTitle from "@/components/ui/SectionTitle";
 import ProjectsGrid from "@/components/projects/projects-grid";
 import { useLanguage } from "@/components/providers/language-provider";
+import { Project } from "@/types/project";
 
-export default function FeaturedProjectsSection() {
+export default function FeaturedProjectsSection({ projects }: { projects: Project[] }) {
   const { t } = useLanguage();
 
   const featuredProjects = projects

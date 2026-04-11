@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import { useLanguage } from "@/components/providers/language-provider";
-import { createBrowserSupabaseClient } from "@/lib/supabase/client";
+import { auth } from "@/lib/firebase/client";
+import imageCompression from "browser-image-compression";
 
 type FormData = {
   slug: string;
+  featured: boolean;
   images: string[];
   team: string[];
   teamAr: string[];
@@ -29,6 +31,7 @@ type FormData = {
 
 const initialFormData: FormData = {
   slug: "",
+  featured: false,
   images: [],
   team: [""],
   teamAr: [""],
@@ -58,6 +61,7 @@ const formText = {
     images: "Images",
     teamEn: "Team (EN)",
     teamAr: "Team (AR)",
+    featured: "Featured Project (Show on Homepage)",
     slug: "Slug",
     supervisorEn: "Supervisor (EN)",
     supervisorAr: "Supervisor (AR)",
@@ -93,6 +97,7 @@ const formText = {
     images: "الصور",
     teamEn: "الفريق (إنجليزي)",
     teamAr: "الفريق (عربي)",
+    featured: "مشروع مميز (يظهر في الصفحة الرئيسية)",
     slug: "الرابط المختصر",
     supervisorEn: "المشرف (إنجليزي)",
     supervisorAr: "المشرف (عربي)",
@@ -132,9 +137,8 @@ export default function ProjectForm() {
 
   const { locale } = useLanguage();
   const text = formText[locale];
-  const supabase = createBrowserSupabaseClient();
 
-  const updateField = (field: keyof FormData, value: string | string[]) => {
+  const updateField = (field: keyof FormData, value: string | string[] | boolean) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
@@ -210,39 +214,43 @@ export default function ProjectForm() {
     setSuccessMessage("");
 
     try {
-      const uploadedUrls: string[] = [];
-
+      const token = await auth.currentUser?.getIdToken();
+      
+      const formDataToSend = new FormData();
+      formDataToSend.append("slug", formData.slug);
+      
       for (const file of Array.from(files)) {
-        const fileExt = file.name.split(".").pop();
-        const safeSlug = formData.slug.trim() || "project";
-        const fileName = `${safeSlug}-${Date.now()}-${Math.random()
-          .toString(36)
-          .slice(2)}.${fileExt}`;
+        const options = {
+          maxSizeMB: 1, 
+          maxWidthOrHeight: 1920,
+          useWebWorker: true,
+        };
+        const compressedFile = await imageCompression(file, options);
+        // Ensure name and type are preserved so API route parses it properly
+        const optimizedFile = new File([compressedFile], file.name, {
+          type: compressedFile.type,
+        });
 
-        const filePath = `projects/${fileName}`;
-
-        const { error: uploadError } = await supabase.storage
-          .from("project-images")
-          .upload(filePath, file, {
-            cacheControl: "3600",
-            upsert: false,
-            contentType: file.type,
-          });
-
-        if (uploadError) {
-          throw uploadError;
-        }
-
-        const { data } = supabase.storage
-          .from("project-images")
-          .getPublicUrl(filePath);
-
-        uploadedUrls.push(data.publicUrl);
+        formDataToSend.append("file", optimizedFile);
       }
+
+      const response = await fetch("/api/admin/upload", {
+        method: "POST",
+        headers: {
+          ...(token && { Authorization: `Bearer ${token}` }),
+        },
+        body: formDataToSend,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to upload images");
+      }
+
+      const result = await response.json();
 
       setFormData((prev) => ({
         ...prev,
-        images: [...prev.images, ...uploadedUrls],
+        images: [...prev.images, ...result.urls],
       }));
     } catch {
       setErrorMessage(text.imageUploadError);
@@ -275,10 +283,13 @@ export default function ProjectForm() {
     };
 
     try {
+      const token = await auth.currentUser?.getIdToken();
+
       const response = await fetch("/api/admin/projects", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          ...(token && { Authorization: `Bearer ${token}` }),
         },
         body: JSON.stringify(cleanedFormData),
       });
@@ -330,6 +341,18 @@ export default function ProjectForm() {
             value={formData.supervisorAr}
             onChange={(e) => updateField("supervisorAr", e.target.value)}
           />
+
+          <label className="flex cursor-pointer items-center gap-3 rounded-lg border bg-slate-50 p-3 md:col-span-2 dark:bg-slate-800/40">
+            <input
+              type="checkbox"
+              className="h-5 w-5 rounded border-gray-300 text-primary focus:ring-primary"
+              checked={formData.featured}
+              onChange={(e) => updateField("featured", e.target.checked)}
+            />
+            <span className="font-medium text-gray-700 dark:text-gray-200">
+              {text.featured}
+            </span>
+          </label>
         </div>
       </div>
 

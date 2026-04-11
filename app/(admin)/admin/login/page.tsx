@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createBrowserSupabaseClient } from "@/lib/supabase/client";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/lib/firebase/client";
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const supabase = createBrowserSupabaseClient();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,19 +17,14 @@ export default function AdminLoginPage() {
     setLoading(true);
     setErrorMessage("");
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      setErrorMessage(error.message);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      router.push("/admin/projects/new");
+      router.refresh();
+    } catch (error: any) {
+      setErrorMessage(error.message || "Failed to login");
       setLoading(false);
-      return;
     }
-
-    router.push("/admin/projects/new");
-    router.refresh();
   };
 
   return (

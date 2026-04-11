@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import Container from "@/components/ui/Container";
 import { useLanguage } from "@/components/providers/language-provider";
-import { getProjectBySlug } from "@/lib/supabase/projects";
+import { getProjectBySlug } from "@/lib/firebase/projects";
 import { Project } from "@/types/project";
 export const dynamic = "force-dynamic"
 

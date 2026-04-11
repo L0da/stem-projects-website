@@ -1,15 +1,22 @@
 import { NextResponse } from "next/server";
-import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { adminAuth, adminDb } from "@/lib/firebase/admin";
 
 export async function POST(request: Request) {
   try {
-    const supabase = await createServerSupabaseClient();
+    const authHeader = request.headers.get("Authorization");
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    const token = authHeader.split("Bearer ")[1];
+    let decodedToken;
+    try {
+      decodedToken = await adminAuth.verifyIdToken(token);
+    } catch {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
-    if (!user) {
+    if (!decodedToken) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -40,10 +47,11 @@ export async function POST(request: Request) {
       image: cleanedImages[0] || "",
       images: cleanedImages,
       team: cleanedTeam,
-      team_ar: cleanedTeamAr,
+      teamAr: cleanedTeamAr,
       supervisor: body.supervisor || "",
-      supervisor_ar: body.supervisorAr || "",
-      featured: false,
+      supervisorAr: body.supervisorAr || "",
+      featured: body.featured === true,
+      createdAt: Date.now(),
       en: {
         title: body.en?.title || "",
         shortDescription: "",
@@ -62,14 +70,11 @@ export async function POST(request: Request) {
       },
     };
 
-    const { error } = await supabase.from("projects").insert([payload]);
-
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+    await adminDb.collection("projects").add(payload);
 
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (error) {
+    console.error("API error:", error);
     return NextResponse.json(
       { error: "Something went wrong" },
       { status: 500 }

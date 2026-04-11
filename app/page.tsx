@@ -4,15 +4,18 @@ import StatsSection from "@/components/home/StatsSection";
 import FeaturedProjectsSection from "@/components/home/featured-projects-section";
 import InspirationSection from "@/components/home/inspiration-section";
 import StemVideoSection from "@/components/home/stem-video-section";
+import { getProjects } from "@/lib/firebase/projects";
 
-export default function Home() {
+export default async function Home() {
+  const projects = await getProjects();
+
   return (
     <>
       <HeroSection />
       <StatsSection />
       <InspirationSection />
       <StemVideoSection />
-      <FeaturedProjectsSection />
+      <FeaturedProjectsSection projects={projects} />
       <CTASection />
     </>
   );
