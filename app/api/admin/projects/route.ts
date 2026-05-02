@@ -76,7 +76,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("API error:", error);
     return NextResponse.json(
-      { error: "Something went wrong" },
+      { error: `Error: ${error instanceof Error ? error.message : String(error)}` },
       { status: 500 }
     );
   }
